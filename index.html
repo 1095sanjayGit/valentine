@@ -616,33 +616,6 @@ document.getElementById("moreBtn").addEventListener("click", () => {
 });
 </script>
 
-<script>
-const music = document.getElementById("music");
 
-function startMusic() {
-    music.play();
-    document.removeEventListener("click", startMusic);
-    document.removeEventListener("touchstart", startMusic);
-}
-
-document.addEventListener("click", startMusic);
-document.addEventListener("touchstart", startMusic);
-</script>
-
-<script>
-const video = document.getElementById("bg-video");
-const music = document.getElementById("music");
-
-// Desktop hover
-video.addEventListener("mouseenter", () => {
-    music.play();
-});
-
-// Mobile touch
-video.addEventListener("touchstart", () => {
-    music.play();
-});
-</script>
-	
 </body>
 </html>
