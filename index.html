@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preeti ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: flex-end;   /* moves content to right */
+    align-items: center;         /* keeps vertical center */
+    padding-right: 8vw;          /* spacing from right edge */
+    text-align: center;
+    background: url('myphoto.jpeg') no-repeat center center/cover;
+}
+
+/* dark romantic overlay */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 0;
+}
+
+
+/* Card */
+.card {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    max-width: 90%;
+    position: relative;
+    z-index: 2;
+}
+
+.btnRow {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+
+h1 {
+    color: #ff4d6d;
+    font-size: 26px;
+}
+
+p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+button {
+    padding: 12px 22px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 8px;
+}
+
+#yesBtn {
+    background-color: #ff4d6d;
+    color: white;
+}
+
+#noBtn {
+    background-color: #ccc;
+   
+}
+
+#message {
+    display: none;
+    font-size: 22px;
+    color: #ff4d6d;
+    margin-top: 15px;
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 20px;
+    animation: floatUp linear infinite;
+    color: rgba(255,255,255,0.8);
+}
+
+/* Gallery hidden initially */
+.gallery {
+    display: none;
+    margin-top: 20px;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Flip card container */
+.flip-card {
+    width: 90px;
+    height: 90px;
+    perspective: 1000px;
+}
+
+/* inner */
+.flip-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+/* flip on click */
+.flip-card.flipped .flip-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* front side */
+.flip-front {
+    background: #ff4d6d;
+    color: white;
+    font-size: 28px;
+}
+
+/* back side */
+.flip-back {
+    transform: rotateY(180deg);
+    overflow: hidden;
+}
+
+.flip-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+/* FULLSCREEN MEMORY VIEW */
+.memory-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.memory-title {
+    color: white;
+    margin-bottom: 25px;
+    font-size: 28px;
+}
+
+/* gallery layout */
+.memory-gallery {
+    display: flex;
+    gap: 35px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* bigger cards */
+.flip-card.big {
+    width: 260px;
+    height: 260px;
+    perspective: 1000px;
+}
+
+/* flip animation */
+.flip-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.flip-card.flipped .flip-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+/* front */
+.flip-front {
+    background: white;
+    font-size: 40px;
+}
+
+/* back */
+.flip-back {
+    transform: rotateY(180deg);
+    overflow: hidden;
+    flex-direction: column;
+}
+
+/* image */
+.flip-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* caption overlay */
+.caption {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    background: rgba(0,0,0,0.55);
+    color: white;
+}
+
+/* more memories button */
+.more-btn {
+    margin-top: 25px;
+    padding: 14px 22px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    color: #ff4d6d;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    transition: 0.3s;
+}
+
+.more-btn:hover {
+    transform: scale(1.05);
+}
+
+/* video screen */
+.video-screen {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    z-index: 10;
+}
+
+.video-screen video {
+    width: 90%;
+    max-width: 420px;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+}
+
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.memories-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.memory-card {
+  width: 260px;          /* bigger size */
+  height: 260px;
+  perspective: 1000px;
+}
+
+.memory-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.memory-card.flipped .memory-inner {
+  transform: rotateY(180deg);
+}
+
+.memory-front,
+.memory-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.memory-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* keeps image clear & properly filled */
+}
+
+.memory-back {
+  background: #ff4d6d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotateY(180deg);
+  font-size: 20px;
+  padding: 15px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+    .flip-card.big {
+        width: 320px;
+        height: 320px;
+    }
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+<body onclick="startMusic()">
+
+<video autoplay muted loop playsinline id="bg-video">
+  <source src="background.mp4" type="video/mp4">
+</video>
+
+<div class="card">
+    <h1>Preeti ❤️</h1>
+    <p>Will you be my Valentine?</p>
+    
+    <div class="btnRow">
+    <button id="yesBtn">YES 💖</button>
+    <button id="noBtn">NO 😢</button>
+    </div>
+	<p id="funnyMsg">Don’t even think about pressing NO 😜</p>
+    <div id="message">
+        Love you today, tomorrow and forever ❤️
+    </div>
+	<div id="gallery" class="gallery">
+    
+    <div class="flip-card">
+        <div class="flip-inner">
+            <div class="flip-front">💖</div>
+            <div class="flip-back">
+                <img src="photo1.jpg" alt="memory">
+            </div>
+        </div>
+    </div>
+
+    <div class="flip-card">
+        <div class="flip-inner">
+            <div class="flip-front">💌</div>
+            <div class="flip-back">
+                <img src="photo2.jpeg" alt="memory">
+            </div>
+        </div>
+    </div>
+
+    <div class="flip-card">
+        <div class="flip-inner">
+            <div class="flip-front">🌹</div>
+            <div class="flip-back">
+                <img src="photo3.jpeg" alt="memory">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+
+<div id="memoryScreen" class="memory-screen">
+
+    <h2 class="memory-title">Our Beautiful Memories ❤️</h2>
+
+    <div class="memory-gallery">
+
+        <div class="flip-card big">
+            <div class="flip-inner">
+                <div class="flip-front">💖</div>
+                <div class="flip-back">
+                    <img src="photo1.jpg">
+                    <div class="caption">Every day with you is Valentine’s Day✨</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card big">
+            <div class="flip-inner">
+                <div class="flip-front">🌹</div>
+                <div class="flip-back">
+                    <img src="photo2.jpeg">
+                    <div class="caption">Smiles that I want forever 😊</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card big">
+            <div class="flip-inner">
+                <div class="flip-front">💌</div>
+                <div class="flip-back">
+                    <img src="photo3.jpeg">
+                    <div class="caption">Every moment with you is magic ❤️</div>
+                </div>
+            </div>
+        </div>
+	<button id="moreBtn" class="more-btn">
+    		Want to see more memories? ❤️
+	</button>
+    </div>
+
+</div>
+
+<div id="videoScreen" class="video-screen">
+    <video id="memoryVideo" controls>
+        <source src="memoryvideo.mp4" type="video/mp4">
+    </video>
+</div>
+
+
+<!-- Background Music -->
+<audio id="music" loop>
+    <source src="mymusic.mp3" type="audio/mpeg">
+</audio>
+<script>
+const noBtn = document.getElementById("noBtn");
+let escapeCount = 0;
+
+const messages = [
+    "Arey arey… itni jaldi NO kyun? 😆",
+    "NO dabane se pehle thoda soch lo 😜",
+    "Lagta hai ungli YES ki taraf mudna chahti hai 😉",
+    "Itni koshish… YES bol do na 😄",
+    "Bas bhi karo… dil YES hi chahta hai ❤️"
+];
+
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+
+// Move NO button when touched or hovered
+function moveButton() {
+
+if (escapeCount === 0) {
+        // after first attempt, allow it to roam the screen
+        noBtn.style.position = "fixed";
+    }
+
+  if (escapeCount < 5) {
+
+	 const padding = 20; 
+        const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+        const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+
+        funnyMsg.textContent = messages[escapeCount];
+        escapeCount++;
+    } else {
+               // final state
+        funnyMsg.textContent = "See… you wanted to say YES 😍";
+
+        noBtn.style.position = "static";   // returns to layout
+        noBtn.innerText = "OF COURSE 😍";  // change button text
+        noBtn.style.backgroundColor = "#ff4d6d";
+        noBtn.style.color = "white";
+    }
+}
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
+
+// YES click
+yesBtn.addEventListener("click", () => {
+
+    document.querySelector(".card").style.display = "none";
+    document.getElementById("memoryScreen").style.display = "flex";
+
+    startHeartBurst();
+    document.getElementById("music").play();
+});
+
+// Floating hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+<script>
+function startMusic() {
+    const music = document.getElementById("music");
+    music.play();
+    document.body.onclick = null;
+}
+</script>
+
+<script>
+document.querySelectorAll(".flip-card").forEach(card => {
+    card.addEventListener("click", () => {
+        card.classList.toggle("flipped");
+    });
+});
+</script>
+
+<script>
+function startHeartBurst() {
+    for (let i = 0; i < 25; i++) {
+        const heart = document.createElement("div");
+        heart.innerHTML = "❤️";
+        heart.style.position = "fixed";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.fontSize = "24px";
+        heart.style.pointerEvents = "none";
+        heart.style.transition = "all 1s ease-out";
+
+        document.body.appendChild(heart);
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 150 + Math.random() * 120;
+
+        setTimeout(() => {
+            heart.style.transform =
+                `translate(${Math.cos(angle) * distance}px,
+                           ${Math.sin(angle) * distance}px)
+                 scale(0.5)`;
+            heart.style.opacity = "0";
+        }, 50);
+
+        setTimeout(() => heart.remove(), 1100);
+    }
+}
+</script>
+
+<script>
+document.getElementById("moreBtn").addEventListener("click", () => {
+
+    // hide memories
+    document.querySelector(".memory-gallery").style.display = "none";
+    document.querySelector(".memory-title").style.display = "none";
+    document.getElementById("moreBtn").style.display = "none";
+
+    // pause background music
+    const music = document.getElementById("music");
+    music.pause();
+
+    // show video
+    const videoScreen = document.getElementById("videoScreen");
+    const video = document.getElementById("memoryVideo");
+
+    videoScreen.style.display = "flex";
+    video.play();
+});
+</script>
+
+
+
+</body>
+</html>
