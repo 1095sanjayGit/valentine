@@ -616,7 +616,18 @@ document.getElementById("moreBtn").addEventListener("click", () => {
 });
 </script>
 
+<script>
+const music = document.getElementById("music");
 
+function startMusic() {
+    music.play();
+    document.removeEventListener("click", startMusic);
+    document.removeEventListener("touchstart", startMusic);
+}
+
+document.addEventListener("click", startMusic);
+document.addEventListener("touchstart", startMusic);
+</script>
 
 </body>
 </html>
