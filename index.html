@@ -629,5 +629,20 @@ document.addEventListener("click", startMusic);
 document.addEventListener("touchstart", startMusic);
 </script>
 
+<script>
+const video = document.getElementById("bg-video");
+const music = document.getElementById("music");
+
+// Desktop hover
+video.addEventListener("mouseenter", () => {
+    music.play();
+});
+
+// Mobile touch
+video.addEventListener("touchstart", () => {
+    music.play();
+});
+</script>
+	
 </body>
 </html>
